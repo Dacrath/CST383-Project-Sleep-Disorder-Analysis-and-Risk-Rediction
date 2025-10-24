@@ -56,6 +56,9 @@ Histograms can show distributions for key numeric variables:
 - Quality of Sleep
 - Systolic and Diastolic Blood Pressure
 
+<img width="825" height="741" alt="VariableHistograms" src="https://github.com/user-attachments/assets/bb437ba8-5603-4d8e-9d5f-4b1b1a9188ad" />
+
+
 Scatterplots can show potential correlations between variables:
 
 - Stress Level vs. Sleep Duration
@@ -63,10 +66,15 @@ Scatterplots can show potential correlations between variables:
 - Age vs. Systolic Blood Pressure
 - Heart Rate vs. Stress Level
 
+<img width="454" height="716" alt="Scatterplot1" src="https://github.com/user-attachments/assets/52c74dd9-7c57-4bad-9bf5-cc45107a65a2" />
+<img width="458" height="734" alt="Scatterplot2" src="https://github.com/user-attachments/assets/1ef5ecad-e012-491c-b0df-0da5f1875538" />
+
 The majority of the participants in the 25–60 years age group with an average sleep duration between 6–8 hours and sleep quality scores of 6–8 which indicates generally adequate rest. Their stress levels are moderate to high with blood pressure readings that fall within normal limits. The data represents a relatively healthy adult group with moderate variation in sleep and lifestyle factors.
 
 ## Initial Predictions
 Logistic regression allows us to predict the probability of a person may develop sleep apnea as they age. A person at age 40 has 0.126 probability of developing sleep apnea versus a person at age 50 that has a probability of 0.3519.
+
+<img width="560" height="339" alt="AgeAndApnea" src="https://github.com/user-attachments/assets/c5427c7d-f394-4ce5-b6c5-338db7b355f4" />
 
 ## Predicting Insomnia
 While the above logistic regression model gives us a quick overview of how a model can be used to see if a prediction is possible, it does not take advantage of machine learning for optimization.
@@ -78,11 +86,23 @@ In order to avoid overfitting, hyperparameters for the minimum samples per leaf 
 
 In addition, the code allows hyperparameters to be applied in a deliberately chosen order. This is intentional should the model developer want to prioritize explainability over performance. For example, using 'best' settings for split will often be more easily interpreted than 'random'. The latter of these may produce counterintuitve results.
 
+### Model Selection and Visualizing the Decision Tree
+
+Model selection uses the best performance, prefers simplicity an explainability over models with equal performance. As noted above, loading the first model with this optimal performance allows the model developer to apply some discretion to which hyperparameters might be prioritized to the end-user needs.
+
+The graph below shows the final decision tree. In this we see that body weight and physical activity level form the first splits, with age, gender, and activity level being utilized for downstream splits.
+
+<img width="1262" height="466" alt="TreeVisualization" src="https://github.com/user-attachments/assets/270ca686-d6e2-4102-a37b-d1400c29d371" />
+
 ### Confusion Matrix
 The confustion matrix below shows the model performance on the test data. Accuracy is quite high (98.2%) with all insomnia classes being properly identified. 'No insomnia' is misclassified in two instances. While this current configuration shows that insomnia is always accurately predicted, it does allow for over-prediction. If the ultimate use of this model determines that false positive classifications are an issue, model retraining may be necessary.
+
+<img width="573" height="432" alt="ConfusionMatrix-Insomnia" src="https://github.com/user-attachments/assets/bada2ded-132b-40c0-ac8c-5a1b8059a488" />
 
 ## Predicting Apnea
 This uses the k-Nearest Neighbors (kNN) machine learning model to predict if a person has sleep apnea. It defines the sleep apnea column as the target variable and selects health and lifestyle features such as age, sleep duration, and gender as predictors. It then removes missing data and gives the dataset a training and testing split of 70/30 respectively. The model is trained and tested 12 times with different k-values and weighting methods (uniform and distance). The results shows how each model performed and helps identify which k and weighting method gives the highest prediction accuracy.
 
 ### Confusion Matrix
 This confusion matrix displays that the model correctly predicted that 84 samples had no sleep apnea and that 21 samples had sleep apnea. A small sample of people were incorrectly identified as indicated by the top right and bottom left squares on the confusion matrix. Overall, the confusion matrix is able to display the model's high accuracy as evidenced by its high amount of true positives and true negatives.
+
+<img width="595" height="469" alt="ConfusionMatrix-Apnea" src="https://github.com/user-attachments/assets/cc585804-f293-4342-a7a3-abc03ab13781" />
